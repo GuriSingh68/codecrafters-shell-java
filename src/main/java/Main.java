@@ -11,6 +11,7 @@ public class Main {
                break;
             }
             else if(input.startsWith("echo")){
+                input.substring(5);
                 System.out.println(input);
             }
         }
