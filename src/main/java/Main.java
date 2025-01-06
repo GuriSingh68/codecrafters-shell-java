@@ -17,6 +17,8 @@ public class Main {
                         System.out.println("exit is a shell builtin");
                     else if(str.equals("echo"))
                         System.out.println("echo is a shell builtin");
+                    else if(str.equals("type"))
+                        System.out.println("type is a shell builtin");
                 }
             }
            else if (input.startsWith("echo")) {
