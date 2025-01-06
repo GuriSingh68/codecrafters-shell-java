@@ -20,7 +20,7 @@ public class Main {
                     else if(command[1].equals("type"))
                         System.out.println("type is a shell builtin");
                     else{
-                        System.out.println(command[1]+": command not found");
+                        System.out.println(command[1]+": not found");
                     }
                     
             }
@@ -28,7 +28,7 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } else {
-                System.out.println(input + ": not found");
+                System.out.println(input + ": command not found");
             }
         }
     }
