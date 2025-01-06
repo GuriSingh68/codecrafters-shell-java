@@ -8,7 +8,7 @@ public class Main {
             System.out.print("$ ");
             String input = scanner.nextLine();
             System.out.println(input+": command not found");
-            System.out.println("$ ");
+            System.out.println("$  ");
             System.exit(0);
         }
     }
