@@ -19,6 +19,9 @@ public class Main {
                         System.out.println("echo is a shell builtin");
                     else if(command[1].equals("type"))
                         System.out.println("type is a shell builtin");
+                    else{
+                        System.out.println(command[1]+": command not found");
+                    }
                     
             }
            else if (input.startsWith("echo")) {
