@@ -11,7 +11,7 @@ public class Main {
                break;
             }
             if(input.startsWith("type")){
-                input=input.substring(5);
+                input=input.substring(4);
                 if(input.equals("echo")) 
                     System.out.println("echo is a shell builtin");
                 else if(input.equals("exit"))
