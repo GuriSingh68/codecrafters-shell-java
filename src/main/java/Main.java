@@ -8,8 +8,9 @@ public class Main {
             System.out.print("$ ");
             String input = scanner.nextLine();
             System.out.println(input+": command not found");
-            System.out.println("$ ");
-            break;
+            if(input=="exit"){
+                System.exit(0);
+            }
         }
     }
 }
