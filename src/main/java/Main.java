@@ -11,10 +11,11 @@ public class Main {
                break;
             }
             if(input.equals("type")){
-                System.out.println("echo is a shell builtin");
-            }
-            if(input.equals("exit")){
-                System.out.println("exit is a shell builtin");
+                input=input.substring(5);
+                if(input.equals("echo")) 
+                    System.out.println("echo is a shell builtin");
+                else if(input.equals("exit"))
+                    System.out.println("exit is a shell builtin");
             }
              if(input.startsWith("echo")){
                 input=input.substring(5);
