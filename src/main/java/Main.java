@@ -9,7 +9,7 @@ public class Main {
             String input = scanner.nextLine();
             System.out.println(input+": command not found");
             if(input=="exit"){
-                System.exit(0);
+                System.out.println("exit 0");
             }
         }
     }
