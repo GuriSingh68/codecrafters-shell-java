@@ -11,15 +11,15 @@ public class Main {
                 break;
             }
             if (input.startsWith("type")) {
-               String[] command=input.split("\\s+");
-                for(String str:command){
-                    if(str.equals("exit"))
+               String[] command=input.split("\\s+",2);
+               
+                    if(command[1].equals("exit"))
                         System.out.println("exit is a shell builtin");
-                    else if(str.equals("echo"))
+                    else if(command[1].equals("echo"))
                         System.out.println("echo is a shell builtin");
-                    else if(str.equals("type"))
-                        System.out.println("type is a shell builtin");
-                }
+                    else if(command[1].equals("type"))
+                        System.out.println("type is a  shell builtin");
+                    
             }
            else if (input.startsWith("echo")) {
                 input = input.substring(5);
