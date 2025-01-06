@@ -12,7 +12,7 @@ public class Main {
             ip=false;
         }
         if(!ip){
-            System.out.println("exit 0");
+            System.out.println("$ s"+"exit 0");
         }
     }
 }
