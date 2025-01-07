@@ -35,7 +35,9 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } else {
-                executeCommand(input);
+                if(!executeCommand(input)){
+                    System.out.println(input+": command not found");
+                }
             }
         }
     }
@@ -54,7 +56,7 @@ public class Main {
         return null;
     }
 
-    public static void executeCommand(String input) {
+    public static boolean executeCommand(String input) {
         String[] parts = input.split("\\s+", 2);
         String command = parts[0];
         String fullPath = getPath(parts[0]);
@@ -68,10 +70,12 @@ public class Main {
                 Process process = Runtime.getRuntime().exec(cmdArray);
                 process.getInputStream().transferTo(System.out);
                 process.waitFor();
+                return true;
             } catch (Exception e) {
                 // TODO: handle exception
                 System.out.println(input+": command not found");
             }
         }
+        return false;
     }
 }
