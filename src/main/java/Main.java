@@ -28,13 +28,13 @@ public class Main {
                     else if(path!=null){
                         System.out.println(command[1]+" is "+path);
                     }
-                    else if(!params.equals("")){
-                        executeCommand(input);
-                    }
                     else{
                         System.out.println(command[1]+": not found");
                     }
                     
+            }
+            else if(!params.equals("")){
+                executeCommand(input);
             }
 
            else if (input.startsWith("echo")) {
