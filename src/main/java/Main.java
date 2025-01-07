@@ -28,10 +28,7 @@ public class Main {
                         System.out.println(command[1]+" is "+path);
                     }
                     else{
-                        boolean executed = executeCommand(input);
-                        if (!executed) {
-                            System.out.println(input + ": command not found");
-                        }
+                       executeCommand(input);
                     }
                     
             }
@@ -41,7 +38,6 @@ public class Main {
                 System.out.println(input);
             } else {
                 executeCommand(input);
-                System.out.println(input + ": command not found");
             }
         }
     }
@@ -59,7 +55,7 @@ public class Main {
         return null;
     }
 
- public static boolean executeCommand(String input) {
+ public static void executeCommand(String input) {
         String fullPath=getPath(input);
         if(fullPath!=null){
             try {
@@ -67,12 +63,11 @@ public class Main {
                 Process process= Runtime.getRuntime().exec(cmd);
                 process.getInputStream().transferTo(System.out);
                 process.waitFor();
-                return true;
             } catch (Exception e) {
                 // TODO: handle exception
                 System.out.println("Error executing command: " + e.getMessage());
             }
         }
-        return false;
+        System.out.println(input + ": command not found");
     }
 }
