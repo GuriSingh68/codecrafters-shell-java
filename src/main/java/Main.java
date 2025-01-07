@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,6 +12,7 @@ public class Main {
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine();
+            String params="";
             if (input.equals("exit 0")) {
                 break;
             }
@@ -26,6 +28,9 @@ public class Main {
                     else if(path!=null){
                         System.out.println(command[1]+" is "+path);
                     }
+                    else if(!params.equals("")){
+                        executeCommand(input);
+                    }
                     else{
                         System.out.println(command[1]+": not found");
                     }
@@ -36,7 +41,7 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } else {
-                executeCommand(input);
+                System.out.println(input + ": command not found");
             }
         }
     }
@@ -54,11 +59,13 @@ public class Main {
         return null;
     }
 
-    public static void executeCommand(String input){
-        String pathCommand=getPath(input.split("\\s+")[0]);
-        if(pathCommand==null){
-            System.out.println("Command not found");
+ public static void executeCommand(String input) {
+        String pathCommand = getPath(input.split("\\s+")[0]);
+        if (pathCommand == null) {
+            System.out.println(input + ": command not found");
+            return;
         }
+
         try {
             Process p = Runtime.getRuntime().exec(input);
             BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -67,9 +74,8 @@ public class Main {
                 System.out.println(line);
             }
             p.waitFor();
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("Error "+e);
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error executing command: " + e.getMessage());
         }
     }
 }
