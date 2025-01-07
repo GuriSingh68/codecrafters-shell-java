@@ -9,10 +9,11 @@ public class Main {
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine();
+            String pathCommand=getPath(input);
             if (input.equals("exit 0")) {
                 break;
             }
-            if (input.startsWith("type")) {
+           else if (input.startsWith("type")) {
                String[] command=input.split("\\s+",2);
                String path=getPath(command[1]);
                     if(command[1].equals("exit"))
@@ -28,6 +29,12 @@ public class Main {
                         System.out.println(command[1]+": not found");
                     }
                     
+            }
+            else if (pathCommand!=null) {
+                if(pathCommand!=null){
+                    Process p =Runtime.getRuntime().exec(pathCommand);
+                    p.waitFor();
+                }
             }
            else if (input.startsWith("echo")) {
                 input = input.substring(5);
