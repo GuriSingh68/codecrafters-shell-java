@@ -12,7 +12,6 @@ public class Main {
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine();
-            String params="";
             if (input.equals("exit 0")) {
                 break;
             }
@@ -33,14 +32,12 @@ public class Main {
                     }
                     
             }
-            else if(!params.equals("")){
-                executeCommand(input);
-            }
-
+            
            else if (input.startsWith("echo")) {
                 input = input.substring(5);
                 System.out.println(input);
             } else {
+                executeCommand(input);
                 System.out.println(input + ": command not found");
             }
         }
@@ -60,22 +57,17 @@ public class Main {
     }
 
  public static void executeCommand(String input) {
-        String pathCommand = getPath(input.split("\\s+")[0]);
-        if (pathCommand == null) {
-            System.out.println(input + ": command not found");
-            return;
-        }
-
-        try {
-            Process p = Runtime.getRuntime().exec(input);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+        String fullPath=getPath(input);
+        if(fullPath!=null){
+            try {
+                String[] cmd=new String[]{fullPath,input};
+                Process process= Runtime.getRuntime().exec(cmd);
+                process.getInputStream().transferTo(System.out);
+                process.waitFor();
+            } catch (Exception e) {
+                // TODO: handle exception
+                System.out.println("Error executing command: " + e.getMessage());
             }
-            p.waitFor();
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Error executing command: " + e.getMessage());
         }
     }
 }
