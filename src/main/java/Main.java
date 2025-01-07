@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -9,7 +11,6 @@ public class Main {
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine();
-            String pathCommand=getPath(input);
             if (input.equals("exit 0")) {
                 break;
             }
@@ -30,17 +31,12 @@ public class Main {
                     }
                     
             }
-            else if (pathCommand!=null) {
-                if(pathCommand!=null){
-                    Process p =Runtime.getRuntime().exec(pathCommand);
-                    p.waitFor();
-                }
-            }
+
            else if (input.startsWith("echo")) {
                 input = input.substring(5);
                 System.out.println(input);
             } else {
-                System.out.println(input + ": command not found");
+                executeCommand(input);
             }
         }
     }
@@ -56,5 +52,24 @@ public class Main {
             }
         }
         return null;
+    }
+
+    public static void executeCommand(String input){
+        String pathCommand=getPath(input.split("\\s+")[0]);
+        if(pathCommand==null){
+            System.out.println("Command not found");
+        }
+        try {
+            Process p = Runtime.getRuntime().exec(input);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            p.waitFor();
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Error "+e);
+        }
     }
 }
