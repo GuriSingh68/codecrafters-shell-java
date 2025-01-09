@@ -36,9 +36,7 @@ public class Main {
                 System.out.println(input);
             } 
             else {
-                if(!executeCommand(input)){
-                    System.out.println("fail");
-                };
+                executeCommand(input);
             }
         }
     }
@@ -57,13 +55,15 @@ public class Main {
         return null;
     }
 
-    public static boolean executeCommand(String input) {
-       input=input.trim();
-       String[] command=input.split("\\s+",2);
-       getPath(command[1]);
-        
-        try {
-            ProcessBuilder processBuilder= new ProcessBuilder(command[1]);
+    public static void executeCommand(String input) {
+      try {
+        String[] command=input.split("\\s+");
+        String path=getPath(command[0]);
+        if(path==null){
+            System.out.println(input+": command not found");
+        }
+        else{
+            ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process process = processBuilder.start();
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
                 String line;
@@ -71,11 +71,12 @@ public class Main {
                     System.out.println(line);
                 }
             }
-            return true;
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            System.out.println(input+": command not found");
-            return false;
+            process.waitFor();
         }
+
+      } catch (Exception e) {
+        // TODO: handle exception
+        System.out.println("error");
+      }
     }
 }
