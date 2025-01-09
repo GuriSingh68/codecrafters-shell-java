@@ -36,7 +36,9 @@ public class Main {
                 System.out.println(input);
             } 
             else {
-                executeCommand(input);
+                if(!executeCommand(input)){
+                    System.out.println("fail");
+                };
             }
         }
     }
@@ -55,7 +57,7 @@ public class Main {
         return null;
     }
 
-    public static void executeCommand(String input) {
+    public static boolean executeCommand(String input) {
        input=input.trim();
        String[] command=input.split("\\s+",2);
        getPath(command[1]);
@@ -69,9 +71,11 @@ public class Main {
                     System.out.println(line);
                 }
             }
+            return true;
         } catch (IOException e) {
             // TODO Auto-generated catch block
             System.out.println(input+": command not found");
+            return false;
         }
     }
 }
