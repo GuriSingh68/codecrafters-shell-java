@@ -26,7 +26,7 @@ public class Main {
                 else if (path != null) {
                     System.out.println(command[1] + " is " + path);
                 } else {
-                    executeCommand(input);
+                    System.out.println("command not found");
                 }
 
             }
@@ -34,10 +34,9 @@ public class Main {
             else if (input.startsWith("echo")) {
                 input = input.substring(5);
                 System.out.println(input);
-            } else {
-                if(!executeCommand(input)){
-                    System.out.println(input+": command not found");
-                }
+            } 
+            else {
+                executeCommand(input);
             }
         }
     }
@@ -56,26 +55,23 @@ public class Main {
         return null;
     }
 
-    public static boolean executeCommand(String input) {
-        String[] parts = input.split("\\s+", 2);
-        String command = parts[0];
-        String fullPath = getPath(parts[0]);
-        String arguments = parts.length > 1 ? parts[1] : "";
-        if (fullPath != null) {
-            try {
-                String[] cmdArray = arguments.isEmpty()
-                        ? new String[] { fullPath }
-                        : new String[] { fullPath, arguments };
-
-                Process process = Runtime.getRuntime().exec(cmdArray);
-                process.getInputStream().transferTo(System.out);
-                process.waitFor();
-                return true;
-            } catch (Exception e) {
-                // TODO: handle exception
-                System.out.println(input+": command not found");
+    public static void executeCommand(String input) {
+       input=input.trim();
+       String[] command=input.split("\\s+",2);
+       getPath(command[1]);
+        
+        try {
+            ProcessBuilder processBuilder= new ProcessBuilder(command[1]);
+            Process process = processBuilder.start();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
             }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            System.out.println(input+": command not found");
         }
-        return false;
     }
 }
