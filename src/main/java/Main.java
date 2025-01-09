@@ -26,7 +26,7 @@ public class Main {
                 else if (path != null) {
                     System.out.println(command[1] + " is " + path);
                 } else {
-                    System.out.println(input+" command not found");
+                    System.out.println(command[1]+" command not found");
                 }
 
             }
