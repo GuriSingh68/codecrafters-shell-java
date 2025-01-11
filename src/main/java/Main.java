@@ -44,7 +44,7 @@ public class Main {
     public static String getPath(String param) {
         String pathEnv = System.getenv("PATH");
         if (pathEnv == null || pathEnv.isEmpty()) {
-            return "Path not found";
+            return "Path not found ";
         }
         for (String path : pathEnv.split(":")) {
             Path fullPath = Path.of(path, param);
