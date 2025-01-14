@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,9 +12,10 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
+        String cwd = Path.of("").toAbsolutePath().toString();
         while (true) {
             System.out.print("$ ");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
             if (input.equals("exit 0")) {
                 break;
             } else if (input.startsWith("type")) {
@@ -26,11 +29,11 @@ public class Main {
                     System.out.println("type is a shell builtin");
                 else if (command[1].equals("pwd")) {
                     System.out.println(command[1] + " is a shell builtin");
+                } else if (command[1].equals("cd")) {
+                    System.out.println(command[1] + " is a shell builtin");
                 } else if (path != null) {
                     System.out.println(command[1] + " is " + path);
-                }
-
-                else {
+                } else {
                     System.out.println(command[1] + ": not found");
                 }
 
@@ -40,8 +43,16 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } else if (input.startsWith("pwd")) {
-                Path cwd = Path.of("").toAbsolutePath();
                 System.out.println(cwd);
+            } else if (input.startsWith("cd")) {
+                String[] pathDir = input.split("\\s+");
+                String str = String.join(",", pathDir[1]);
+                Path path = Path.of(str).toAbsolutePath();
+                if (!(Files.exists(path) && Files.isDirectory(path))) {
+                    System.out.println("cd: " + pathDir[1] + ": No such file or directory");
+                } else {
+                    cwd = str;
+                }
             } else {
                 executeCommand(input);
             }
