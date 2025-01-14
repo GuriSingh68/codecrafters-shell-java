@@ -23,14 +23,14 @@ public class Main {
                     System.out.println("echo is a shell builtin");
                 else if (command[1].equals("type"))
                     System.out.println("type is a shell builtin");
-                else if (path != null) {
+                else if (command[1] == "pwd") {
+                    System.out.println(command[1] + " is a shell builtin");
+                } else if (path != null) {
                     System.out.println(command[1] + " is " + path);
-                } 
-                else if(command[1]=="pwd"){
-                    System.out.println(command[1]+" is a shell builtin");
                 }
+
                 else {
-                    System.out.println(command[1]+": not found");
+                    System.out.println(command[1] + ": not found");
                 }
 
             }
@@ -38,9 +38,9 @@ public class Main {
             else if (input.startsWith("echo")) {
                 input = input.substring(5);
                 System.out.println(input);
-            } 
+            }
             // else if(input.startsWith("pwd")){
-            //     getPath(input);
+            // getPath(input);
             // }
             else {
                 executeCommand(input);
@@ -63,27 +63,26 @@ public class Main {
     }
 
     public static void executeCommand(String input) {
-      try {
-        String[] command=input.split("\\s+");
-        String path=getPath(command[0]);
-        if(path==null){
-            System.out.println(input+": command not found");
-        }
-        else{
-            ProcessBuilder processBuilder = new ProcessBuilder(command);
-            Process process = processBuilder.start();
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+        try {
+            String[] command = input.split("\\s+");
+            String path = getPath(command[0]);
+            if (path == null) {
+                System.out.println(input + ": command not found");
+            } else {
+                ProcessBuilder processBuilder = new ProcessBuilder(command);
+                Process process = processBuilder.start();
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
                 }
+                process.waitFor();
             }
-            process.waitFor();
-        }
 
-      } catch (Exception e) {
-        // TODO: handle exception
-        System.out.println("error");
-      }
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("error");
+        }
     }
 }
