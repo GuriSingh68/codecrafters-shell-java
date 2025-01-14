@@ -12,6 +12,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
+        String cwd=Path.of("").toAbsolutePath().toString();
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine().trim();
@@ -45,7 +46,6 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } else if (input.startsWith("pwd")) {
-                Path cwd = Path.of("").toAbsolutePath();
                 System.out.println(cwd);
             }
             else if(input.startsWith("cd")){
@@ -56,8 +56,7 @@ public class Main {
                     System.out.println("cd "+pathDir[1]+": No such file or directory");
                 }
                 else{
-                    Path currenPath=Path.of(System.getProperty("user.dir"));
-                    currenPath=path;
+                   cwd=str;
                 }
             }
              else {
