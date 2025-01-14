@@ -25,7 +25,11 @@ public class Main {
                     System.out.println("type is a shell builtin");
                 else if (path != null) {
                     System.out.println(command[1] + " is " + path);
-                } else {
+                } 
+                else if(command[1]=="pwd"){
+                    System.out.println(command[1]+" is a shell builtin");
+                }
+                else {
                     System.out.println(command[1]+": not found");
                 }
 
