@@ -51,13 +51,14 @@ public class Main {
             else if(input.startsWith("cd")){
                 String[] pathDir=input.split("\\s+");
                 String str = String.join(",", pathDir[1]);
-                Path path=Path.of(str).toAbsolutePath();
-                if(Files.isRegularFile(path) && Files.isExecutable(path)){
-                    System.out.println(path);
-                }
-                else{
-                    System.out.println("cd: "+path+": No such file or directory");
-                }
+                 Path path=Path.of(str).toAbsolutePath();
+                // if(Files.isRegularFile(path) && Files.isExecutable(path)){
+                //     System.out.println(path);
+                // }
+                // else{
+                //     System.out.println("cd: "+path+": No such file or directory");
+                // }
+                System.out.println(path);
             }
              else {
                 executeCommand(input);
