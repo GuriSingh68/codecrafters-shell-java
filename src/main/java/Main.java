@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -39,8 +40,8 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } else if (input.startsWith("pwd")) {
-                String pathEnv=System.getenv("PATH");
-                 System.out.println(pathEnv.toString());
+                Path cwd = Path.of("").toAbsolutePath();
+                System.out.println(cwd);
             } else {
                 executeCommand(input);
             }
