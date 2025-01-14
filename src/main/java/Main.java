@@ -35,6 +35,9 @@ public class Main {
                 input = input.substring(5);
                 System.out.println(input);
             } 
+            else if(input.startsWith("pwd")){
+                getPath(input);
+            }
             else {
                 executeCommand(input);
             }
