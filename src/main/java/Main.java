@@ -53,7 +53,7 @@ public class Main {
                 String str = String.join(",", pathDir[1]);
                 Path path=Path.of(str).toAbsolutePath();
                 if(!(Files.exists(path) && Files.isDirectory(path))){
-                    System.out.println("cd "+pathDir[1]+": No such file or directory");
+                    System.out.println("cd: "+pathDir[1]+": No such file or directory");
                 }
                 else{
                    cwd=str;
