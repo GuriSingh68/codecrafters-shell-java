@@ -14,7 +14,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("$ ");
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
             if (input.equals("exit 0")) {
                 break;
             } else if (input.startsWith("type")) {
@@ -54,6 +54,10 @@ public class Main {
                 Path path=Path.of(str).toAbsolutePath();
                 if(!(Files.exists(path) && Files.isDirectory(path))){
                     System.out.println("cd "+pathDir[1]+": No such file or directory");
+                }
+                else{
+                    Path currenPath=Path.of(System.getProperty("user.dir"));
+                    currenPath=path;
                 }
             }
              else {
