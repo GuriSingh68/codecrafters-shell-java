@@ -23,7 +23,7 @@ public class Main {
                     System.out.println("echo is a shell builtin");
                 else if (command[1].equals("type"))
                     System.out.println("type is a shell builtin");
-                else if (command[1] == "pwd") {
+                else if (command[1].equals("pwd")) {
                     System.out.println(command[1] + " is a shell builtin");
                 } else if (path != null) {
                     System.out.println(command[1] + " is " + path);
@@ -38,11 +38,10 @@ public class Main {
             else if (input.startsWith("echo")) {
                 input = input.substring(5);
                 System.out.println(input);
-            }
-            // else if(input.startsWith("pwd")){
-            // getPath(input);
-            // }
-            else {
+            } else if (input.startsWith("pwd")) {
+                String pathEnv=System.getenv("PATH");
+                 System.out.println(pathEnv.toString());
+            } else {
                 executeCommand(input);
             }
         }
