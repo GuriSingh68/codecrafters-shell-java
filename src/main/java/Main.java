@@ -9,10 +9,10 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
+    private static Path cwd = Path.of("").toAbsolutePath();
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        String cwd = Path.of("").toAbsolutePath().toString();
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine().trim();
@@ -46,13 +46,15 @@ public class Main {
                 System.out.println(cwd);
             } else if (input.startsWith("cd")) {
                 String[] pathDir = input.split("\\s+");
-                String str = String.join(",", pathDir[1]);
-                Path path = Path.of(str).toAbsolutePath();
-                if (!(Files.exists(path) && Files.isDirectory(path))) {
+                Path path = Path.of(pathDir[1]).toAbsolutePath();
+                if(pathDir[1].startsWith("..")){
+                    cwd=path.getParent();
+                }
+                else if (!(Files.exists(path) && Files.isDirectory(path))) {
                     System.out.println("cd: " + pathDir[1] + ": No such file or directory");
                 } 
                 else {
-                    cwd = str;
+                    cwd = path;
                 }
             } else {
                 executeCommand(input);
