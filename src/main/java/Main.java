@@ -47,8 +47,14 @@ public class Main {
             } else if (input.startsWith("cd")) {
                 String[] pathDir = input.split("\\s+");
                 Path path = Path.of(pathDir[1]).toAbsolutePath();
-                if(pathDir[1].startsWith("./")){
-                    cwd = cwd.resolve(pathDir[1]).normalize();
+                Path newPath;
+                String target=pathDir[1];
+                 if(pathDir[1].equals("./")){
+                    cwd.normalize();
+                }
+                else if(pathDir[1].startsWith("./")){
+                    newPath=cwd.resolve(target).normalize();
+                    System.out.println(newPath);
                 }
                  if(pathDir[1].startsWith("..")){
                     cwd=cwd.getParent();
