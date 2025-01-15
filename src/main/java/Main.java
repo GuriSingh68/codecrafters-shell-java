@@ -53,12 +53,12 @@ public class Main {
                     cwd.normalize();
                 }
                 else if(pathDir[1].startsWith("./")){
-                    newPath=cwd.resolve(target).normalize();
+                    cwd=cwd.resolve(target).normalize();
                 }
                  if(pathDir[1].startsWith("..")){
                     cwd=cwd.getParent();
                 }
-                else if (!(Files.exists(path) && Files.isDirectory(path))) {
+                else if (!(Files.exists(path) && Files.isDirectory(path)) || pathDir[1].trim().isEmpty()) {
                     System.out.println("cd: " + pathDir[1] + ": No such file or directory");
                 } 
                 else {
