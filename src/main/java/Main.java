@@ -49,7 +49,6 @@ public class Main {
                 Path path = Path.of(pathDir[1]).toAbsolutePath();
                 if(pathDir[1].startsWith("./")){
                     cwd = cwd.resolve(pathDir[1]).normalize();
-                    System.out.println("New paths is: "+pathDir[1] +cwd);
                 }
                  if(pathDir[1].startsWith("..")){
                     cwd=cwd.getParent();
