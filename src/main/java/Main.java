@@ -46,24 +46,34 @@ public class Main {
                 System.out.println(cwd);
             } else if (input.startsWith("cd")) {
                 String[] pathDir = input.split("\\s+");
-                Path path = Path.of(pathDir[1]).toAbsolutePath();
+                if (pathDir.length < 2) {
+                    System.out.println("cd: missing argument");
+                    return;
+                }
+            
+                String target = pathDir[1]; 
                 Path newPath;
-                String target=pathDir[1];
-                 if(pathDir[1].equals("./")){
-                    cwd=cwd.normalize();
+            
+                if (target.equals("./")) {
+                    newPath = cwd.normalize();
+                } else if (target.startsWith("./")) {
+                    newPath = cwd.resolve(target).normalize();
+                } else if (target.equals("..")) {
+                    newPath = cwd.getParent();
+                    if (newPath == null) {
+                        System.out.println("cd: already at root directory");
+                        return;
+                    }
+                } else {
+                    newPath = cwd.resolve(target).normalize();
                 }
-                else if(pathDir[1].startsWith("./")){
-                    cwd=cwd.resolve(target).normalize();
+            
+                if (Files.exists(newPath) && Files.isDirectory(newPath)) {
+                    cwd = newPath; 
+                } else {
+                    System.out.println("cd: " + target + ": No such file or directory");
                 }
-                 if(pathDir[1].startsWith("..")){
-                    cwd=cwd.getParent();
-                }
-                else if ((Files.exists(path) && Files.isDirectory(path)) || pathDir[1].trim().isEmpty()) {
-                    System.out.println("cd: " + pathDir[1] + ": No such file or directory");
-                } 
-                else {
-                    cwd = path;
-                }
+            
             } else {
                 executeCommand(input);
             }
