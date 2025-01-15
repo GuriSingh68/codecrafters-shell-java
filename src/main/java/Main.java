@@ -50,16 +50,15 @@ public class Main {
                 Path newPath;
                 String target=pathDir[1];
                  if(pathDir[1].equals("./")){
-                    cwd.normalize();
+                    cwd=cwd.normalize();
                 }
                 else if(pathDir[1].startsWith("./")){
                     cwd=cwd.resolve(target).normalize();
-                    System.out.println(cwd);
                 }
                  if(pathDir[1].startsWith("..")){
                     cwd=cwd.getParent();
                 }
-                else if (!(Files.exists(path) && Files.isDirectory(path)) || pathDir[1].trim().isEmpty()) {
+                else if ((Files.exists(path) && Files.isDirectory(path)) || pathDir[1].trim().isEmpty()) {
                     System.out.println("cd: " + pathDir[1] + ": No such file or directory");
                 } 
                 else {
