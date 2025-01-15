@@ -50,7 +50,19 @@ public class Main {
                 Path path = Path.of(str).toAbsolutePath();
                 if (!(Files.exists(path) && Files.isDirectory(path))) {
                     System.out.println("cd: " + pathDir[1] + ": No such file or directory");
-                } else {
+                } 
+                else if(pathDir[1].equals("..")){
+                    Path newPath;
+                    newPath=Path.of(cwd).getParent();
+                    if(newPath==null){
+                        System.out.println("cd: "+pathDir[1]+" No such file or directory");
+                return;
+                    }
+                    else {
+                        newPath=Path.of(cwd).resolve(pathDir[1]).normalize();
+                    }
+                }
+                else {
                     cwd = str;
                 }
             } else {
