@@ -54,6 +54,7 @@ public class Main {
                 }
                 else if(pathDir[1].startsWith("./")){
                     cwd=cwd.resolve(target).normalize();
+                    System.out.println(cwd);
                 }
                  if(pathDir[1].startsWith("..")){
                     cwd=cwd.getParent();
