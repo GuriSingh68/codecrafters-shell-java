@@ -47,8 +47,12 @@ public class Main {
             } else if (input.startsWith("cd")) {
                 String[] pathDir = input.split("\\s+");
                 Path path = Path.of(pathDir[1]).toAbsolutePath();
-                if(pathDir[1].startsWith("..")){
-                    cwd=path.getParent();
+                if(pathDir[1].startsWith("./")){
+                    cwd = cwd.resolve(pathDir[1]).normalize();
+                    System.out.println("New paths is: "+pathDir[1] +cwd);
+                }
+                 if(pathDir[1].startsWith("..")){
+                    cwd=cwd.getParent();
                 }
                 else if (!(Files.exists(path) && Files.isDirectory(path))) {
                     System.out.println("cd: " + pathDir[1] + ": No such file or directory");
