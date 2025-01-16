@@ -40,7 +40,7 @@ public class Main {
             }
 
             else if (input.startsWith("echo")) {
-                String[] inputString=input.trim().split("\\s+",2);
+                String[] inputString=input.trim().split("\\s+");
                 String target=inputString[1];
                 if(inputString.length<2 || inputString[1].isBlank()){
                    System.out.println("invalid command");
@@ -49,7 +49,10 @@ public class Main {
                     System.out.println(target.substring(1, target.length()-1));
                 }
                 else{
-                    System.out.println(inputString[1].trim());
+                    // System.out.println(inputString.substring(5,inputString.length()-1).replaceAll("\\s"," "));
+                    String targeString=input.substring(5, input.length());
+                    targeString=targeString.replaceAll("\\s+", " ");
+                    System.out.println(targeString);
                 }
 
             } 
