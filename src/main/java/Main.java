@@ -65,7 +65,8 @@ public class Main {
                     }
                 } 
                 else if(target.equals("~")){
-                    newPath=cwd.getRoot();
+                    String pathEnv=System.getenv("HOME");
+                    newPath=cwd.resolve(pathEnv).normalize();
                 }
                 else {
                     newPath = cwd.resolve(target).normalize();
