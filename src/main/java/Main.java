@@ -45,7 +45,7 @@ public class Main {
                 if(inputString.length<2 || inputString[1].isBlank()){
                    System.out.println("invalid command");
                 }
-                else if(target.split("'([^']*)'") != null){
+                else if(target.startsWith("'") && target.split("'([^']*)'") != null){
                     System.out.println(input.substring(6,input.length()-1));
                 }
                 else{
