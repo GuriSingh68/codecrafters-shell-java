@@ -45,10 +45,9 @@ public class Main {
             } else if (input.startsWith("pwd")) {
                 System.out.println(cwd);
             } else if (input.startsWith("cd")) {
-                String[] pathDir = input.split("\\s+");
+                String[] pathDir = input.trim().split("\\s+");
                 if (pathDir.length < 2) {
                     System.out.println("cd: missing argument");
-                    return;
                 }
             
                 String target = pathDir[1]; 
@@ -64,11 +63,15 @@ public class Main {
                         System.out.println("cd: already at root directory");
                         return;
                     }
-                } else {
+                } 
+                else if(target.equals("~")){
+                    newPath=cwd.getRoot();
+                }
+                else {
                     newPath = cwd.resolve(target).normalize();
                 }
             
-                if (Files.exists(newPath) && Files.isDirectory(newPath)) {
+                if (Files.exists(newPath) && Files.isDirectory(newPath) || target.isEmpty()) {
                     cwd = newPath; 
                 } else {
                     System.out.println("cd: " + target + ": No such file or directory");
