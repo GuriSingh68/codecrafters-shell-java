@@ -40,9 +40,30 @@ public class Main {
             }
 
             else if (input.startsWith("echo")) {
-                input = input.substring(5);
-                System.out.println(input);
-            } else if (input.startsWith("pwd")) {
+                String[] inputString=input.trim().split("\\s+",2);
+                String target=inputString[1];
+                if(inputString.length<2 || inputString[1].isBlank()){
+                   System.out.println("invalid command");
+                }
+                else if(target.startsWith("'") && target.endsWith("'")){
+                    System.out.println(target.substring(1, target.length()-1));
+                }
+                else{
+                    System.out.println(inputString[1].trim());
+                }
+
+            } 
+            else if(input.startsWith("cat")){
+                String[] inputString=input.trim().split("\\s+",2);
+                String target=inputString[1];
+                if(target.startsWith("'") && target.endsWith("'")){
+                    System.out.println(target.substring(1, target.length()-1));
+                }
+                else if(inputString[1].length()<2 ||target.isEmpty()){
+                    System.out.println("invalid command");
+                }
+            }
+            else if (input.startsWith("pwd")) {
                 System.out.println(cwd);
             } else if (input.startsWith("cd")) {
                 String[] pathDir = input.trim().split("\\s+");
