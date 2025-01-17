@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     private static Path cwd = Path.of("").toAbsolutePath();
@@ -124,19 +126,19 @@ public class Main {
         return null;
     }
     public static void readContent(String input){
-            String[] parts=input.split("\\s+");
-           for(int i=0;i<parts.length;i++){
-            String filePath=parts[i].replaceAll("'", " ");
+        Pattern pattern = Pattern.compile("'([^']*)'");
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
             try {
+                String filePath = matcher.group(1);
                 String content=Files.readString(Paths.get(filePath));
-                System.out.println(content + " ");
+                System.out.println(content+ " ");
             } catch (Exception e) {
                 // TODO: handle exception
-                System.out.println("Error is" + e);
+                System.out.println("erro in reading "+ e);
             }
-           
         }
-    }
+        }
 
     public static void executeCommand(String input) {
         try {
