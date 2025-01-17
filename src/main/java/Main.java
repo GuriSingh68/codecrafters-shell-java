@@ -61,8 +61,10 @@ public class Main {
                 String[] inputString=input.trim().split("\\s+",2);
                 String target=inputString[1];
                 if(target.startsWith("'") && target.endsWith("'")){
-                    String ip=target.substring(1, target.length()-1);
+                    String ip=input.substring(4, input.length());
+                    ip=ip.replaceAll("'", "");
                     executeCommand(ip);
+                    
                 }
                 else if(inputString[1].length()<2 ||target.isEmpty()){
                     System.out.println("invalid command");
