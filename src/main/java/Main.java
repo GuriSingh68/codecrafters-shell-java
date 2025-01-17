@@ -131,7 +131,7 @@ public class Main {
             try {
                 String filePath = matcher.group(1);
                 String content=Files.readString(Paths.get(filePath));
-                System.out.print(content+ " ");
+                System.out.print(content+ "");
             } catch (Exception e) {
                 // TODO: handle exception
                 System.out.println("erro in reading "+ e);
