@@ -61,6 +61,7 @@ public class Main {
                 String[] inputString=input.trim().split("\\s+",2);
                 String target=inputString[1];
                 if(target.startsWith("'") && target.endsWith("'")){
+                    System.out.println(target);
                    readContent(target);
                 }
                 else if(inputString[1].length()<2 ||target.isEmpty()){
@@ -123,12 +124,7 @@ public class Main {
         return null;
     }
     public static void readContent(String input){
-        String[] parts=input.split("\\s+");
-        if (!parts[0].equals("cat")) {
-            System.out.println("Invalid command");
-            return;
-        }
-        else{
+            String[] parts=input.split("\\s+");
            for(int i=0;i<parts.length;i++){
             String filePath=parts[i].replaceAll("'", " ");
             try {
@@ -138,7 +134,7 @@ public class Main {
                 // TODO: handle exception
                 System.out.println("Error is" + e);
             }
-           }
+           
         }
     }
 
