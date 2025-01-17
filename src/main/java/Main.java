@@ -7,12 +7,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
+    private static Path cwd = Path.of("").toAbsolutePath();
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
-        String cwd = Path.of("").toAbsolutePath().toString();
         while (true) {
             System.out.print("$ ");
             String input = scanner.nextLine().trim();
@@ -40,19 +42,69 @@ public class Main {
             }
 
             else if (input.startsWith("echo")) {
-                input = input.substring(5);
-                System.out.println(input);
-            } else if (input.startsWith("pwd")) {
+                String[] inputString=input.trim().split("\\s+");
+                String target=inputString[1];
+                if(inputString.length<2 || inputString[1].isBlank()){
+                   System.out.println("invalid command");
+                }
+                else if(target.startsWith("'") ){
+                   String targetString=input.substring(6,input.length()-1);
+                   System.out.println(targetString.replaceAll("'",""));
+                }
+                else{
+                    // System.out.println(inputString.substring(5,inputString.length()-1).replaceAll("\\s"," "));
+                    String targeString=input.substring(5, input.length());
+                    targeString=targeString.replaceAll("\\s+", " ");
+                    System.out.println(targeString);
+                }
+
+            } 
+            else if(input.startsWith("cat")){
+                String[] inputString=input.trim().split("\\s+",2);
+                String target=inputString[1];
+                if(target.startsWith("'") && target.endsWith("'")){
+                    readContent(target);
+                }
+                else if(inputString[1].length()<2 ||target.isEmpty()){
+                    System.out.println("invalid command");
+                }
+            }
+            else if (input.startsWith("pwd")) {
                 System.out.println(cwd);
             } else if (input.startsWith("cd")) {
-                String[] pathDir = input.split("\\s+");
-                String str = String.join(",", pathDir[1]);
-                Path path = Path.of(str).toAbsolutePath();
-                if (!(Files.exists(path) && Files.isDirectory(path))) {
-                    System.out.println("cd: " + pathDir[1] + ": No such file or directory");
-                } else {
-                    cwd = str;
+                String[] pathDir = input.trim().split("\\s+");
+                if (pathDir.length < 2) {
+                    System.out.println("cd: missing argument");
                 }
+            
+                String target = pathDir[1]; 
+                Path newPath;
+            
+                if (target.equals("./")) {
+                    newPath = cwd.normalize();
+                } else if (target.startsWith("./")) {
+                    newPath = cwd.resolve(target).normalize();
+                } else if (target.equals("..")) {
+                    newPath = cwd.getParent();
+                    if (newPath == null) {
+                        System.out.println("cd: already at root directory");
+                        return;
+                    }
+                } 
+                else if(target.equals("~")){
+                    String pathEnv=System.getenv("HOME");
+                    newPath=cwd.resolve(pathEnv).normalize();
+                }
+                else {
+                    newPath = cwd.resolve(target).normalize();
+                }
+            
+                if (Files.exists(newPath) && Files.isDirectory(newPath) || target.isEmpty()) {
+                    cwd = newPath; 
+                } else {
+                    System.out.println("cd: " + target + ": No such file or directory");
+                }
+            
             } else {
                 executeCommand(input);
             }
@@ -72,6 +124,20 @@ public class Main {
         }
         return null;
     }
+    public static void readContent(String input){
+        Pattern pattern = Pattern.compile("'([^']*)'");
+        Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            try {
+                String filePath = matcher.group(1);
+                String content=Files.readString(Paths.get(filePath));
+                System.out.print(content+ "");
+            } catch (Exception e) {
+                // TODO: handle exception
+                System.out.println("erro in reading "+ e);
+            }
+        }
+        }
 
     public static void executeCommand(String input) {
         try {
