@@ -63,8 +63,7 @@ public class Main {
                 String[] inputString=input.trim().split("\\s+",2);
                 String target=inputString[1];
                 if(target.startsWith("'") && target.endsWith("'")){
-                    System.out.println(target);
-                   readContent(target);
+                    readContent(target);
                 }
                 else if(inputString[1].length()<2 ||target.isEmpty()){
                     System.out.println("invalid command");
@@ -132,7 +131,7 @@ public class Main {
             try {
                 String filePath = matcher.group(1);
                 String content=Files.readString(Paths.get(filePath));
-                System.out.println(content+ " ");
+                System.out.print(content+ " ");
             } catch (Exception e) {
                 // TODO: handle exception
                 System.out.println("erro in reading "+ e);
