@@ -59,7 +59,6 @@ public class Main {
                     targetString = targetString.replaceAll("\"\\s*\"", " "); 
                 
                     System.out.println(targetString);
-
                     }
                 else{
                     // System.out.println(inputString.substring(5,inputString.length()-1).replaceAll("\\s"," "));
