@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 public class Main {
     private static Path cwd = Path.of("").toAbsolutePath();
+
     public static void main(String[] args) throws Exception {
 
         Scanner scanner = new Scanner(System.in);
@@ -51,6 +52,10 @@ public class Main {
                    String targetString=input.substring(6,input.length()-1);
                    System.out.println(targetString.replaceAll("'",""));
                 }
+                else if(target.startsWith("\"")){
+                        String targetString=input.substring(6, input.length()-1);
+                        System.out.println(targetString.replaceAll("\"", ""));
+                    }
                 else{
                     // System.out.println(inputString.substring(5,inputString.length()-1).replaceAll("\\s"," "));
                     String targeString=input.substring(5, input.length());
@@ -63,6 +68,9 @@ public class Main {
                 String[] inputString=input.trim().split("\\s+",2);
                 String target=inputString[1];
                 if(target.startsWith("'") && target.endsWith("'")){
+                    readContent(target);
+                }
+                else if(target.startsWith("\"") && target.endsWith("\"")){
                     readContent(target);
                 }
                 else if(inputString[1].length()<2 ||target.isEmpty()){
@@ -124,20 +132,21 @@ public class Main {
         }
         return null;
     }
-    public static void readContent(String input){
-        Pattern pattern = Pattern.compile("'([^']*)'");
-        Matcher matcher = pattern.matcher(input);
+
+    public static void readContent(String input) {
+        Pattern pattern = Pattern.compile("(['\"])(.*?)\\1");
+         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
             try {
-                String filePath = matcher.group(1);
-                String content=Files.readString(Paths.get(filePath));
-                System.out.print(content+ "");
+                String filePath = matcher.group(2);
+                String content = Files.readString(Paths.get(filePath));
+                System.out.print(content + "");
             } catch (Exception e) {
                 // TODO: handle exception
-                System.out.println("erro in reading "+ e);
+                System.out.println("erro in reading " + e);
             }
         }
-        }
+    }
 
     public static void executeCommand(String input) {
         try {
