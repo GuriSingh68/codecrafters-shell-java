@@ -51,11 +51,29 @@ public class Main {
                     String targetString = input.substring(6, input.length() - 1);
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
-                    String targetString = input.substring(6, input.length() - 1);
+                    String targetString = input.substring(6); // Extract the string after `echo `
 
-                    targetString = targetString.replaceAll("\\s+", " ");
-                    targetString = targetString.replaceAll("\"\\s*\"", " ");
-                    System.out.println(targetString);
+    StringBuilder result = new StringBuilder();
+    boolean insideQuotes = false;
+
+    for (int i = 0; i < targetString.length(); i++) {
+        char currentChar = targetString.charAt(i);
+
+        if (currentChar == '"') {
+            // Toggle the state of being inside quotes
+            insideQuotes = !insideQuotes;
+            result.append(currentChar);
+        } else if (insideQuotes || currentChar != ' ') {
+            // Append if inside quotes or if the character is not a space
+            result.append(currentChar);
+        } else if (result.length() > 0 && result.charAt(result.length() - 1) != '"') {
+            // Append a single space if not between quotes
+            result.append(currentChar);
+        }
+    }
+
+    // Print the final result
+    System.out.println(result.toString());
                 } else {
                     String targeString = input.substring(5, input.length());
                     targeString = targeString.replaceAll("\\s+", "");
