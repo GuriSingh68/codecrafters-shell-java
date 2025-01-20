@@ -54,7 +54,7 @@ public class Main {
                 }
                 else if(target.startsWith("\"")){
                         String targetString=input.substring(6, input.length()-1);
-                        System.out.println(targetString.replaceAll("\"", ""));
+                        System.out.println(targetString.replaceAll("\"", "").trim());
                     }
                 else{
                     // System.out.println(inputString.substring(5,inputString.length()-1).replaceAll("\\s"," "));
