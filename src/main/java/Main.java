@@ -52,28 +52,28 @@ public class Main {
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
                     String targetString = input.substring(6); // Extract the string after `echo `
+                    StringBuilder result = new StringBuilder();
+                    boolean insideQuotes = false;
 
-    StringBuilder result = new StringBuilder();
-    boolean insideQuotes = false;
+                    for (int i = 0; i < targetString.length(); i++) {
+                        char currentChar = targetString.charAt(i);
 
-    for (int i = 0; i < targetString.length(); i++) {
-        char currentChar = targetString.charAt(i);
+                        if (currentChar == '"') {
+                            // Toggle the state of being inside quotes
+                            insideQuotes = !insideQuotes;
 
-        if (currentChar == '"') {
-            // Toggle the state of being inside quotes
-            insideQuotes = !insideQuotes;
-            result.append(currentChar);
-        } else if (insideQuotes || currentChar != ' ') {
-            // Append if inside quotes or if the character is not a space
-            result.append(currentChar);
-        } else if (result.length() > 0 && result.charAt(result.length() - 1) != '"') {
-            // Append a single space if not between quotes
-            result.append(currentChar);
-        }
-    }
+                            // Avoid appending consecutive quotes without content
+                            if (result.length() > 0 && result.charAt(result.length() - 1) != ' ' && !insideQuotes) {
+                                result.append(' '); // Add space before the next segment
+                            }
+                        } else if (insideQuotes) {
+                            // Append characters if inside quotes
+                            result.append(currentChar);
+                        }
+                    }
 
-    // Print the final result
-    System.out.println(result.toString());
+                    // Trim any trailing spaces and print the result
+                    System.out.println(result.toString().trim());
                 } else {
                     String targeString = input.substring(5, input.length());
                     targeString = targeString.replaceAll("\\s+", "");
