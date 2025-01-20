@@ -53,8 +53,13 @@ public class Main {
                    System.out.println(targetString.replaceAll("'",""));
                 }
                 else if(target.startsWith("\"")){
-                        String targetString=input.substring(6, input.length()-1);
-                        System.out.println(targetString.replaceAll("\"", "").trim());
+                    String targetString = input.substring(6, input.length() - 1);
+    
+                    targetString = targetString.replaceAll("\\s+", " "); 
+                    targetString = targetString.replaceAll("\"\\s*\"", " "); 
+                
+                    System.out.println(targetString);
+
                     }
                 else{
                     // System.out.println(inputString.substring(5,inputString.length()-1).replaceAll("\\s"," "));
