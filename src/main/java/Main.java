@@ -58,7 +58,7 @@ public class Main {
                     System.out.println(targetString);
                 } else {
                     String targeString = input.substring(5, input.length());
-                    targeString = targeString.replaceAll("\\s+", " ");
+                    targeString = targeString.replaceAll("\\s+", "");
                     System.out.println(targeString);
                 }
 
