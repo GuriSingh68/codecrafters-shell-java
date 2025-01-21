@@ -51,29 +51,18 @@ public class Main {
                     String targetString = input.substring(6, input.length() - 1);
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
-                    String targetString = input.substring(6); // Extract the string after `echo `
-                    StringBuilder result = new StringBuilder();
-                    boolean insideQuotes = false;
-
-                    for (int i = 0; i < targetString.length(); i++) {
-                        char currentChar = targetString.charAt(i);
-
-                        if (currentChar == '"') {
-                            // Toggle the state of being inside quotes
-                            insideQuotes = !insideQuotes;
-
-                            // Avoid appending consecutive quotes without content
-                            if (result.length() > 0 && result.charAt(result.length() - 1) != ' ' && !insideQuotes) {
-                                result.append(' '); // Add space before the next segment
-                            }
-                        } else if (insideQuotes) {
-                            // Append characters if inside quotes
-                            result.append(currentChar);
+                    String targetString = input.substring(6, input.length() - 1);
+                    char[] ch=targetString.toCharArray();
+                    // System.out.println(ch);
+                    StringBuilder result=new StringBuilder();
+                    for (char c:ch){
+                        if(c!='\"'){
+                            result.append(c);
                         }
                     }
-
-                    // Trim any trailing spaces and print the result
-                    System.out.println(result.toString().trim());
+                    String finalString=result.toString();
+                    System.out.println(finalString);
+                    
                 } else {
                     String targeString = input.substring(5, input.length());
                     targeString = targeString.replaceAll("\\s+", "");
