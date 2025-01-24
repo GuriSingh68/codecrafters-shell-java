@@ -83,9 +83,7 @@ public class Main {
                     System.out.println(result.toString().trim());
 
                 } else {
-                    String targeString = input.substring(5, input.length());
-                    targeString = targeString.replaceAll("\\s+", "");
-                    System.out.println(targeString);
+                    System.out.println(input.substring(5, input.length()));
                 }
 
             } else if (input.startsWith("cat")) {
