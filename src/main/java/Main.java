@@ -51,16 +51,20 @@ public class Main {
                     String targetString = input.substring(6, input.length() - 1);
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
-                    String targetString = input.substring(6, input.length() - 1);
+                    String targetString = input.substring(6, input.length() - 1).trim();
                     char[] ch=targetString.toCharArray();
                     // System.out.println(ch);
                     StringBuilder result=new StringBuilder();
+                    boolean insideQuotes=false;
                     for (char c:ch){
-                        if(c!='\"'){
+                        if(c=='\"'){
+                            insideQuotes = ! insideQuotes;
+                        }
+                        else{
                             result.append(c);
                         }
                     }
-                    String finalString = result.toString().replaceAll(" +", " ");
+                    String finalString = result.toString().trim();
                     System.out.println(finalString);
                     
                 } else {
