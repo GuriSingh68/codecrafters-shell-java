@@ -51,38 +51,8 @@ public class Main {
                     String targetString = input.substring(6, input.length() - 1);
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
-                    String targetString = input.substring(5).trim();
-
-                    StringBuilder result = new StringBuilder();
-                    boolean insideQuotes = false;
-                    boolean previousWasQuote = false;
-
-                    for (int i = 0; i < targetString.length(); i++) {
-                        char currentChar = targetString.charAt(i);
-
-                        if (currentChar == '"') {
-                            // Toggle the state of being inside quotes
-                            insideQuotes = !insideQuotes;
-
-                            if (previousWasQuote) {
-                                // Concatenate adjacent quotes without spaces
-                                previousWasQuote = false;
-                            } else {
-                                previousWasQuote = true;
-                            }
-                        } else {
-                            previousWasQuote = false;
-                            if (insideQuotes || (!Character.isWhitespace(currentChar)
-                                    || (result.length() > 0 && result.charAt(result.length() - 1) != ' '))) {
-                                // Append characters inside quotes or normalize spaces outside quotes
-                                result.append(currentChar);
-                            }
-                        }
-                    }
-
-                    // Trim and print the final result
-                    System.out.println(result.toString().trim());
-
+                    System.out.println(target);
+                    
                 } else {
                     String targeString = input.substring(5, input.length());
                     targeString = targeString.replaceAll("\\s+", "");
