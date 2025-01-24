@@ -60,7 +60,7 @@ public class Main {
                             result.append(c);
                         }
                     }
-                    String finalString=result.toString().trim();
+                    String finalString = result.toString().replaceAll(" +", " ");
                     System.out.println(finalString);
                     
                 } else {
