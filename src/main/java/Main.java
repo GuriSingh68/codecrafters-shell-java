@@ -83,7 +83,7 @@ public class Main {
                     System.out.println(result.toString().trim());
 
                 } else {
-                    System.out.println(input.substring(5, input.length()));
+                    System.out.println(input.substring(5, input.length()).replaceAll("\\s+", " "));
                 }
 
             } else if (input.startsWith("cat")) {
