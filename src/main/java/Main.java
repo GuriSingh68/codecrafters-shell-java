@@ -51,29 +51,37 @@ public class Main {
                     String targetString = input.substring(6, input.length() - 1);
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
-                    String targetString = input.substring(6).trim(); // Remove "echo " and trim leading/trailing spaces
+                    String targetString = input.substring(5).trim();
+
                     StringBuilder result = new StringBuilder();
+                    boolean insideQuotes = false;
+                    boolean previousWasQuote = false;
 
-                    boolean insideQuotes = false; // Track if we're inside double quotes
-                    boolean justExitedQuotes = false; // Track if we've just exited quotes
+                    for (int i = 0; i < targetString.length(); i++) {
+                        char currentChar = targetString.charAt(i);
 
-                    for (char c : targetString.toCharArray()) {
-                        if (c == '\"') {
-                            insideQuotes = !insideQuotes; // Toggle the insideQuotes flag
-                            justExitedQuotes = !insideQuotes; // Set flag when exiting quotes
-                        } else {
-                            if (justExitedQuotes && c == ' ') {
-                                // Skip spaces immediately following quotes
-                                justExitedQuotes = false;
-                                continue;
+                        if (currentChar == '"') {
+                            // Toggle the state of being inside quotes
+                            insideQuotes = !insideQuotes;
+
+                            if (previousWasQuote) {
+                                // Concatenate adjacent quotes without spaces
+                                previousWasQuote = false;
+                            } else {
+                                previousWasQuote = true;
                             }
-                            result.append(c); // Append character to result
-                            justExitedQuotes = false; // Reset flag after adding characters
+                        } else {
+                            previousWasQuote = false;
+                            if (insideQuotes || (!Character.isWhitespace(currentChar)
+                                    || (result.length() > 0 && result.charAt(result.length() - 1) != ' '))) {
+                                // Append characters inside quotes or normalize spaces outside quotes
+                                result.append(currentChar);
+                            }
                         }
                     }
 
-                    String finalString = result.toString().replaceAll(" +", " ").trim(); // Remove extra spaces
-                    System.out.println(finalString);
+                    // Trim and print the final result
+                    System.out.println(result.toString().trim());
 
                 } else {
                     String targeString = input.substring(5, input.length());
