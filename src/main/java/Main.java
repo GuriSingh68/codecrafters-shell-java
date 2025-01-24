@@ -51,22 +51,30 @@ public class Main {
                     String targetString = input.substring(6, input.length() - 1);
                     System.out.println(targetString.replaceAll("'", ""));
                 } else if (target.startsWith("\"")) {
-                    String targetString = input.substring(6, input.length() - 1).trim();
-                    char[] ch=targetString.toCharArray();
-                    // System.out.println(ch);
-                    StringBuilder result=new StringBuilder();
-                    boolean insideQuotes=false;
-                    for (char c:ch){
-                        if(c=='\"'){
-                            insideQuotes = ! insideQuotes;
-                        }
-                        else{
-                            result.append(c);
+                    String targetString = input.substring(6).trim(); // Remove "echo " and trim leading/trailing spaces
+                    StringBuilder result = new StringBuilder();
+
+                    boolean insideQuotes = false; // Track if we're inside double quotes
+                    boolean justExitedQuotes = false; // Track if we've just exited quotes
+
+                    for (char c : targetString.toCharArray()) {
+                        if (c == '\"') {
+                            insideQuotes = !insideQuotes; // Toggle the insideQuotes flag
+                            justExitedQuotes = !insideQuotes; // Set flag when exiting quotes
+                        } else {
+                            if (justExitedQuotes && c == ' ') {
+                                // Skip spaces immediately following quotes
+                                justExitedQuotes = false;
+                                continue;
+                            }
+                            result.append(c); // Append character to result
+                            justExitedQuotes = false; // Reset flag after adding characters
                         }
                     }
-                    String finalString = result.toString().trim();
+
+                    String finalString = result.toString().replaceAll(" +", " ").trim(); // Remove extra spaces
                     System.out.println(finalString);
-                    
+
                 } else {
                     String targeString = input.substring(5, input.length());
                     targeString = targeString.replaceAll("\\s+", "");
